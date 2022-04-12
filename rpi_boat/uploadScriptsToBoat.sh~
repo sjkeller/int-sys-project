@@ -1,0 +1,2 @@
+#!/bin/sh
+scp -r ./scripts ubuntu@192.168.178.111:/home/ubuntu/APMboat

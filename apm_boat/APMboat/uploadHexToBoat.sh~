@@ -1,0 +1,3 @@
+#!/bin/sh
+scp /tmp/APMboat.build/APMboat.hex ubuntu@sb3:/home/ubuntu/APMboat/APMHexFile/APMboat.hex
+ssh ubuntu@sb3 /home/ubuntu/APMboat/APMHexFile/upload.sh
