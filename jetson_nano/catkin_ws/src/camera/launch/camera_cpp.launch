@@ -1,0 +1,14 @@
+<launch>
+  <node
+    pkg="camera"
+    type="camera_pub_cpp"
+    name="camera_pub_cpp"
+    output="screen"
+  />
+  <node
+    pkg="camera"
+    type="camera_sub_cpp"
+    name="camera_sub_cpp"
+    output="screen"
+  />
+</launch> 
