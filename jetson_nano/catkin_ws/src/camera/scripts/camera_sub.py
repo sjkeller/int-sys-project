@@ -4,8 +4,8 @@
 from inspect import currentframe
 import rospy # Python library for ROS
 from sensor_msgs.msg import Image # Image is the message type
-from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import cv2 # OpenCV library
+from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import numpy as np
  
 def callback(data):
