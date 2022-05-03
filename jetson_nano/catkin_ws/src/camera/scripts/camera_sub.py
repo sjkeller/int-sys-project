@@ -30,14 +30,10 @@ def callback(data):
   print("left ", left.shape)
   print("right ", right.shape)
 
-  stereo = cv2.StereoSGBM_create()#(numDisparities=16, blockSize=11)
-  disparity = stereo.compute(left, right) 
-
   # Display image
   cv2.imshow("left", left)
   cv2.imshow("right", right)
   cv2.imshow("camera", current_frame)
-  cv2.imshow("disparity", disparity)
 
   cv2.waitKey(1)
       
