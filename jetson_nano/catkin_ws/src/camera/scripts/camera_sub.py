@@ -2,6 +2,8 @@
  
 # Import the necessary libraries
 from inspect import currentframe
+
+from cv2 import StereoBM
 import rospy # Python library for ROS
 from sensor_msgs.msg import Image # Image is the message type
 import cv2 # OpenCV library
@@ -29,11 +31,16 @@ def callback(data):
   print("frame size ", current_frame.shape)
   print("left ", left.shape)
   print("right ", right.shape)
+  
+  stereo : StereoBM = cv2.StereoBM_create(16, 15)
+
+  depth = stereo.compute(left, right)
 
   # Display image
   cv2.imshow("left", left)
   cv2.imshow("right", right)
   cv2.imshow("camera", current_frame)
+  cv2.imshow("stereo depth", depth)
 
   cv2.waitKey(1)
       
