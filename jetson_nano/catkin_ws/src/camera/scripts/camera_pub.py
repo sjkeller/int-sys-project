@@ -24,8 +24,8 @@ def publish_message():
      
   # Create a VideoCapture object
   # The argument '0' gets the default webcam.
-  #cap = cv2.VideoCapture(cv2.CAP_ANY)
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(cv2.CAP_ANY)
+  #cap = cv2.VideoCapture(0)
 
   # Used to convert between ROS and OpenCV images
   bridge = CvBridge()
@@ -49,9 +49,9 @@ def publish_message():
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
-        pub.publish(bridge.cv2_to_imgmsg(frame, encoding="bgr8"))
-        pub_left.publish(bridge.cv2_to_imgmsg(left, encoding="bgr8"))
-        pub_right.publish(bridge.cv2_to_imgmsg(right, encoding="bgr8"))
+        pub.publish(bridge.cv2_to_imgmsg(frame))
+        pub_left.publish(bridge.cv2_to_imgmsg(left))
+        pub_right.publish(bridge.cv2_to_imgmsg(right))
 
       # Sleep just enough to maintain the desired rate
       rate.sleep()

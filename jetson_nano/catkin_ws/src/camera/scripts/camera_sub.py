@@ -9,7 +9,10 @@ from sensor_msgs.msg import Image # Image is the message type
 import cv2 # OpenCV library
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import numpy as np
- 
+
+def nothing(x):
+  pass
+
 def callback(data):
  
   # Used to convert between ROS and OpenCV images
@@ -26,23 +29,38 @@ def callback(data):
   width = current_frame.shape[1]
   left = current_frame[:, 0:(width//2)]
   right = current_frame[:, width//2:]
+  
+  # convert video streams to grayscale
+  left_gs = cv2.cvtColor(left, cv2.COLOR_BGR2GRAY)
+  right_gs = cv2.cvtColor(right, cv2.COLOR_BGR2GRAY)
 
   current_frame[:, width//2, :] = 0
   print("frame size ", current_frame.shape)
   print("left ", left.shape)
   print("right ", right.shape)
+   
+  # get slider positions 
+  numDisparities = cv2.getTrackbarPos('numDisparities','disp')*16
+  blockSize = cv2.getTrackbarPos('blockSize','disp')*2 + 5
+  minDisparity = cv2.getTrackbarPos('minDisparity','disp')
   
-  stereo : StereoBM = cv2.StereoBM_create(16, 15)
+  # refresh stereo vars
+  stereo.setNumDisparities(numDisparities)
+  stereo.setBlockSize(blockSize)
+  stereo.setMinDisparity(minDisparity)
+  
+  # calculate depth image and rescale it
+  depth = stereo.compute(left_gs, right_gs)
+  depth = depth.astype(np.float32)
+  depth = (depth/16.0 - minDisparity)/numDisparities
 
-  depth = stereo.compute(left, right)
-
-  # Display image
-  cv2.imshow("left", left)
-  cv2.imshow("right", right)
+  # Display video feed
+  cv2.imshow("left", left_gs)
+  cv2.imshow("right", right_gs)
   cv2.imshow("camera", current_frame)
-  cv2.imshow("stereo depth", depth)
-
-  cv2.waitKey(1)
+  cv2.imshow("disp", depth)
+  cv2.waitKey(50)
+  
       
 def receive_message():
  
@@ -61,4 +79,14 @@ def receive_message():
   cv2.destroyAllWindows()
   
 if __name__ == '__main__':
+	
+  # create and setup depth config window
+  cv2.namedWindow('disp',cv2.WINDOW_NORMAL)
+  cv2.createTrackbar('numDisparities','disp',1,17,nothing)
+  cv2.createTrackbar('blockSize','disp',5,50,nothing)
+  cv2.createTrackbar('minDisparity','disp',5,25,nothing)
+  
+  # init stereo class
+  stereo : StereoBM = cv2.StereoBM_create()
+  
   receive_message()
