@@ -61,7 +61,6 @@ def callback(data):
   cv2.imshow("disp", depth)
   cv2.waitKey(50)
   
-      
 def receive_message():
  
   # Tells rospy the name of the node.
@@ -90,3 +89,4 @@ if __name__ == '__main__':
   stereo : StereoBM = cv2.StereoBM_create()
   
   receive_message()
+  

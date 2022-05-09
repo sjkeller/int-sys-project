@@ -50,8 +50,8 @@ def publish_message():
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(bridge.cv2_to_imgmsg(frame))
-        pub_left.publish(bridge.cv2_to_imgmsg(left))
-        pub_right.publish(bridge.cv2_to_imgmsg(right))
+        #pub_left.publish(bridge.cv2_to_imgmsg(left))
+        #pub_right.publish(bridge.cv2_to_imgmsg(right))
 
       # Sleep just enough to maintain the desired rate
       rate.sleep()
