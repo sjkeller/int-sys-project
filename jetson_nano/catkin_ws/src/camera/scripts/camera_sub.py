@@ -53,12 +53,16 @@ def callback(data):
   depth = stereo.compute(left_gs, right_gs)
   depth = depth.astype(np.float32)
   depth = (depth/16.0 - minDisparity)/numDisparities
-
+  
   # Display video feed
   cv2.imshow("left", left_gs)
   cv2.imshow("right", right_gs)
-  cv2.imshow("camera", current_frame)
+  #cv2.imshow("camera", current_frame)
   cv2.imshow("disp", depth)
+  
+  #ret, sol = cv2.(coeff, z, flags = cv2.DECOMP_QR)
+  
+  
   cv2.waitKey(50)
   
 def receive_message():

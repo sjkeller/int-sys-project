@@ -24,8 +24,9 @@ def publish_message():
      
   # Create a VideoCapture object
   # The argument '0' gets the default webcam.
-  #cap = cv2.VideoCapture(cv2.CAP_ANY)
-  cap = cv2.VideoCapture(2)
+  cap = cv2.VideoCapture(cv2.CAP_ANY)
+ 
+  #cap = cv2.VideoCapture(2)
 
   # Used to convert between ROS and OpenCV images
   bridge = CvBridge()
@@ -36,6 +37,9 @@ def publish_message():
       # Capture frame-by-frame
       # This method returns True/False as well
       # as the video frame.
+      print(cap.get(cv2.CAP_PROP_CONTRAST))
+      print(cap.get(cv2.CAP_PROP_SATURATION))
+      print(cap.get(cv2.CAP_PROP_BRIGHTNESS))
       ret, frame = cap.read()
       width = frame.shape[1]
       left = frame[:, 0:(width//2)]
@@ -45,18 +49,23 @@ def publish_message():
       if ret == True:
         # Print debugging information to the terminal
         rospy.loginfo('publishing video frame')
+
+        cv2.imshow("raw", frame)
+        cv2.waitKey(50)
              
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(bridge.cv2_to_imgmsg(frame))
-        #pub_left.publish(bridge.cv2_to_imgmsg(left))
-        #pub_right.publish(bridge.cv2_to_imgmsg(right))
+        pub_left.publish(bridge.cv2_to_imgmsg(left))
+        pub_right.publish(bridge.cv2_to_imgmsg(right))
 
       # Sleep just enough to maintain the desired rate
+
       rate.sleep()
          
 if __name__ == '__main__':
+  cv2.namedWindow('raw',cv2.WINDOW_NORMAL)
   try:
     publish_message()
   except rospy.ROSInterruptException:
