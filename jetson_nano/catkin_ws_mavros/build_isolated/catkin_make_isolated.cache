@@ -1,0 +1,2 @@
+mavlink:mavros/libmavconn:mavros/mavros:mavros/mavros_extras:mavros/mavros_msgs:mavros/test_mavros:rqt_mavros_gui
+-G Unix Makefiles -DCATKIN_DEVEL_PREFIX=/home/nano/gitlab_repo/jetson_nano/catkin_ws_mavros/devel_isolated -DCMAKE_INSTALL_PREFIX=/home/nano/gitlab_repo/jetson_nano/catkin_ws_mavros/install_isolated

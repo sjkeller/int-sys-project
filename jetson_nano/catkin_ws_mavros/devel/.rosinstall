@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/nano/gitlab_repo/jetson_nano/catkin_ws_mavros/devel/setup.sh
