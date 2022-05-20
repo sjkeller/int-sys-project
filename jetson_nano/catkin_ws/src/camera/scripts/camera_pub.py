@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
  
 # Import the necessary libraries
-import rospy # Python library for ROS
-from sensor_msgs.msg import Image # Image is the message type
-import cv2 # OpenCV library
-from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
-  
+import cv2  # OpenCV library
+import rospy  # Python library for ROS
+from cv_bridge import \
+    CvBridge  # Package to convert between ROS and OpenCV Images
+from sensor_msgs.msg import Image  # Image is the message type
+
+
 def publish_message():
  
   # Node is publishing to the video_frames topic using 
@@ -37,13 +39,13 @@ def publish_message():
       # Capture frame-by-frame
       # This method returns True/False as well
       # as the video frame.
-      print(cap.get(cv2.CAP_PROP_CONTRAST))
-      print(cap.get(cv2.CAP_PROP_SATURATION))
-      print(cap.get(cv2.CAP_PROP_BRIGHTNESS))
+      #print("contrast", cap.get(cv2.CAP_PROP_CONTRAST))
+      #print("saturation", cap.get(cv2.CAP_PROP_SATURATION))
+      #print("brightness", cap.get(cv2.CAP_PROP_BRIGHTNESS))
       ret, frame = cap.read()
-      width = frame.shape[1]
-      left = frame[:, 0:(width//2)]
-      right = frame[:, width//2:]
+      #width = frame.shape[1]
+      #left = frame[:, 0:(width//2)]
+      #right = frame[:, width//2:]
       #cv2.imshow("pub show", frame)
       #cv2.waitKey(1)
       if ret == True:
@@ -57,8 +59,8 @@ def publish_message():
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(bridge.cv2_to_imgmsg(frame))
-        pub_left.publish(bridge.cv2_to_imgmsg(left))
-        pub_right.publish(bridge.cv2_to_imgmsg(right))
+        #pub_left.publish(bridge.cv2_to_imgmsg(left))
+        #pub_right.publish(bridge.cv2_to_imgmsg(right))
 
       # Sleep just enough to maintain the desired rate
 
