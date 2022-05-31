@@ -5,8 +5,20 @@ import numpy as np
 import glob
 # checkerboard contants
 
+def make_shots():
+    cap = cv.VideoCapture(cv.CAP_ANY)
+
+    ret, frame = cap.read()
+    while(True):
+        cv.imshow("video feed", frame)
+        if cv.waitKey(1) & 0xFF == ord('y'):
+            cv.imwrite("video_shot.png", frame)
+            cv.destroyAllWindows()
+            break
+
+
 chessboard_dim = (9, 6)
-frame_size = (100, 100)
+frame_size = (480, 640)
 
 term_criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
@@ -22,6 +34,9 @@ right_2d_pts = []
 
 imgs_left = glob.glob("calib_samples/left/*")
 imgs_right = glob.glob("calib_samples/right/*")
+
+
+
 
 for left, right in zip(imgs_left, imgs_right):
 
@@ -77,3 +92,6 @@ cv_calib_file.write("stereoMapLeftX", stereo_map_left[0])
 cv_calib_file.write("stereoMapLeftY", stereo_map_left[0])
 cv_calib_file.write("stereoMapRightX", stereo_map_right[0])
 cv_calib_file.write("stereoMapRightY", stereo_map_right[1])
+
+if __name__ == '__main__':
+    make_shots()
