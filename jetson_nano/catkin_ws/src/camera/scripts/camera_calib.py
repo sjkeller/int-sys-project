@@ -6,10 +6,10 @@ import glob
 # checkerboard contants
 
 def make_shots():
-    cap = cv.VideoCapture(2)
+    cap = cv.VideoCapture(0)
 
-    ret, frame = cap.read()
     while(True):
+        ret, frame = cap.read()
         cv.imshow("video feed", frame)
         if cv.waitKey(1) & 0xFF == ord('y'):
             cv.imwrite("video_shot.png", frame)
