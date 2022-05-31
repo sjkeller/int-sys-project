@@ -6,7 +6,7 @@ import glob
 # checkerboard contants
 
 def make_shots():
-    cap = cv.VideoCapture(cv.CAP_ANY)
+    cap = cv.VideoCapture(2)
 
     ret, frame = cap.read()
     while(True):
@@ -16,14 +16,14 @@ def make_shots():
             cv.destroyAllWindows()
             break
 
-
+"""
 chessboard_dim = (9, 6)
 frame_size = (480, 640)
 
 term_criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 obj_pts = np.zeros((chessboard_dim[0] * chessboard_dim[1], 3), np.float32)
-obj_pts = np.mgrid[0:chessboard_dim[0], 0:chessboard_dim[1].T.reshape(-1, 2)]
+#obj_pts = np.mgrid[0:chessboard_dim[0], 0:chessboard_dim[1].T.reshape(-1, 2)]
 obj_pts *= 20
 
 print(obj_pts)
@@ -92,6 +92,6 @@ cv_calib_file.write("stereoMapLeftX", stereo_map_left[0])
 cv_calib_file.write("stereoMapLeftY", stereo_map_left[0])
 cv_calib_file.write("stereoMapRightX", stereo_map_right[0])
 cv_calib_file.write("stereoMapRightY", stereo_map_right[1])
-
+"""
 if __name__ == '__main__':
     make_shots()
