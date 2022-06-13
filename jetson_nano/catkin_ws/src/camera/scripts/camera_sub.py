@@ -10,6 +10,15 @@ import cv2 # OpenCV library
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import numpy as np
 
+# get calibration data from xml file
+calib_file = cv2.FileStorage()
+calib_file.open("stereoMap.xml", cv2.FileStorage_READ)
+stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
+stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
+stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
+stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
+
+
 def nothing(x):
   pass
 
@@ -29,6 +38,10 @@ def callback(data):
   width = current_frame.shape[1]
   left = current_frame[:, 0:(width//2)]
   right = current_frame[:, width//2:]
+
+  # apply calinbration to both video parts
+  right = cv2.remap(right, stereoMapR_x, stereoMapR_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
+  left = cv2.remap(left, stereoMapL_x, stereoMapL_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
   
   # convert video streams to grayscale
   left_gs = cv2.cvtColor(left, cv2.COLOR_BGR2GRAY)
