@@ -6,18 +6,25 @@ from inspect import currentframe
 from cv2 import StereoBM
 import rospy # Python library for ROS
 from sensor_msgs.msg import Image # Image is the message type
-import cv2 # OpenCV library
+import cv2, os # OpenCV library
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import numpy as np
 
 # get calibration data from xml file
 calib_file = cv2.FileStorage()
+os.chdir("/home/parallels/isp-2022/jetson_nano/catkin_ws/src/camera")
 calib_file.open("stereoMap.xml", cv2.FileStorage_READ)
+
+
 stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
 stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
 stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
 stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
 
+print(stereoMapL_x)
+print(stereoMapL_y)
+print(stereoMapL_x)
+print(stereoMapR_x)
 
 def nothing(x):
   pass
