@@ -7,12 +7,13 @@ import glob, os
 
 def make_shots():
     cap = cv.VideoCapture(0)
-
+    counter = 0
     while(True):
         ret, frame = cap.read()
         cv.imshow("video feed", frame)
         if cv.waitKey(1) & 0xFF == ord('y'):
-            cv.imwrite("video_shot.png", frame)
+            counter += 1
+            cv.imwrite("video_shot_" + str(counter) + ".png", frame)
             cv.destroyAllWindows()
             break
 
@@ -36,9 +37,9 @@ def cam_calib():
     objpoints = [] # 3d point in real world space
     imgpointsL = [] # 2d points in image plane.
     imgpointsR = [] # 2d points in image plane.
-
-    imagesLeft = sorted(glob.glob('scripts/calib_samples/left/*.png'))
-    imagesRight = sorted(glob.glob('scripts/calib_samples/right/*.png'))
+    print(os.getcwd())
+    imagesLeft = sorted(glob.glob('calib_samples/left/*.png'))
+    imagesRight = sorted(glob.glob('calib_samples/right/*.png'))
 
     print(imagesLeft)
     print(imagesRight)
