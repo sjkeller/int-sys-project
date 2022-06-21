@@ -58,7 +58,7 @@ def publish_message():
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
-        pub.publish(bridge.cv2_to_imgmsg(frame))
+        pub.publish(bridge.cv2_to_imgmsg(frame, encoding="rgb8"))
         #pub_left.publish(bridge.cv2_to_imgmsg(left))
         #pub_right.publish(bridge.cv2_to_imgmsg(right))
 

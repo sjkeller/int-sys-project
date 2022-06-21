@@ -48,7 +48,7 @@ def callback(data):
 
   # apply calibration to both video parts
   right = cv2.remap(raw_right, stereoMapR_x, stereoMapR_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
-  left = cv2.remap(raw_left, stereoMapL_x, stereoMapL_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
+  left = cv2.remap(raw_left, stereoMapL_x, stereoMapL_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT,0)
   
   current_frame[:, width//2, :] = 0
   print("frame size ", current_frame.shape)

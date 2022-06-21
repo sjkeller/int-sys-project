@@ -82,11 +82,11 @@ def cam_calib():
 
     ############## CALIBRATION #######################################################
 
-    retL, cameraMatrixL, distL, rvecsL, tvecsL = cv.calibrateCamera(objpoints, imgpointsL, frameSize, None, None)
+    retL, cameraMatrixL, distL, rvecsL, tvecsL = cv.calibrateCamera(objpoints, imgpointsL, frameSize, None, None, flags=cv.CALIB_FIX_K3)
     heightL, widthL, channelsL = imgL.shape
     newCameraMatrixL, roi_L = cv.getOptimalNewCameraMatrix(cameraMatrixL, distL, (widthL, heightL), 1, (widthL, heightL))
 
-    retR, cameraMatrixR, distR, rvecsR, tvecsR = cv.calibrateCamera(objpoints, imgpointsR, frameSize, None, None)
+    retR, cameraMatrixR, distR, rvecsR, tvecsR = cv.calibrateCamera(objpoints, imgpointsR, frameSize, None, None, flags=cv.CALIB_FIX_K3)
     heightR, widthR, channelsR = imgR.shape
     newCameraMatrixR, roi_R = cv.getOptimalNewCameraMatrix(cameraMatrixR, distR, (widthR, heightR), 1, (widthR, heightR))
 
@@ -96,6 +96,7 @@ def cam_calib():
 
     flags = 0
     flags |= cv.CALIB_FIX_INTRINSIC
+    flags |= cv.CALIB_SAME_FOCAL_LENGTH
     # Here we fix the intrinsic camara matrixes so that only Rot, Trns, Emat and Fmat are calculated.
     # Hence intrinsic parameters are the same 
 
@@ -109,7 +110,7 @@ def cam_calib():
     rectifyScale= 1
      # change alpha maybe??
 
-    rectL, rectR, projMatrixL, projMatrixR, Q, roi_L, roi_R= cv.stereoRectify(newCameraMatrixL, distL, newCameraMatrixR, distR, grayL.shape[::-1], rot, trans, rectifyScale,(0,0))
+    rectL, rectR, projMatrixL, projMatrixR, Q, roi_L, roi_R= cv.stereoRectify(newCameraMatrixL, distL, newCameraMatrixR, distR, grayL.shape[::-1], rot, trans, rectifyScale,(0,0), alpha=0.0)
 
     stereoMapL = cv.initUndistortRectifyMap(newCameraMatrixL, distL, rectL, projMatrixL, grayL.shape[::-1], cv.CV_16SC2)
     stereoMapR = cv.initUndistortRectifyMap(newCameraMatrixR, distR, rectR, projMatrixR, grayR.shape[::-1], cv.CV_16SC2)
