@@ -38,8 +38,8 @@ def cam_calib():
     imgpointsL = [] # 2d points in image plane.
     imgpointsR = [] # 2d points in image plane.
     print(os.getcwd())
-    imagesLeft = sorted(glob.glob('calib_samples/left/*.png'))
-    imagesRight = sorted(glob.glob('calib_samples/right/*.png'))
+    imagesLeft = sorted(glob.glob('calib_samples/left_cut/*.png'))
+    imagesRight = sorted(glob.glob('calib_samples/right_cut/*.png'))
 
     print(imagesLeft)
     print(imagesRight)
