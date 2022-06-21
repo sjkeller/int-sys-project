@@ -11,4 +11,10 @@
     name="camera_corr"
     output="screen"
   />
+  <node
+    pkg="camera"
+    type="camera_sub.py"
+    name="camera_sub"
+    output="screen"
+  />
 </launch>

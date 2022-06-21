@@ -30,7 +30,7 @@ def cam_calib():
     objp = np.zeros((chessboardSize[0] * chessboardSize[1], 3), np.float32)
     objp[:,:2] = np.mgrid[0:chessboardSize[0],0:chessboardSize[1]].T.reshape(-1,2)
 
-    size_of_chessboard_squares_mm = 20
+    size_of_chessboard_squares_mm = 25
     objp = objp * size_of_chessboard_squares_mm
 
     # Arrays to store object points and image points from all the images.
@@ -107,6 +107,8 @@ def cam_calib():
     ########## Stereo Rectification #################################################
 
     rectifyScale= 1
+     # change alpha maybe??
+
     rectL, rectR, projMatrixL, projMatrixR, Q, roi_L, roi_R= cv.stereoRectify(newCameraMatrixL, distL, newCameraMatrixR, distR, grayL.shape[::-1], rot, trans, rectifyScale,(0,0))
 
     stereoMapL = cv.initUndistortRectifyMap(newCameraMatrixL, distL, rectL, projMatrixL, grayL.shape[::-1], cv.CV_16SC2)
