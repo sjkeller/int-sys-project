@@ -1,7 +1,7 @@
 subscribers:
 
   camera_reading:
-    topic: /video_frames
+    topic: /video_right
     queue_size: 1
 
 actions:

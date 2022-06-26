@@ -43,9 +43,9 @@ def publish_message():
       #print("saturation", cap.get(cv2.CAP_PROP_SATURATION))
       #print("brightness", cap.get(cv2.CAP_PROP_BRIGHTNESS))
       ret, frame = cap.read()
-      #width = frame.shape[1]
-      #left = frame[:, 0:(width//2)]
-      #right = frame[:, width//2:]
+      width = frame.shape[1]
+      left = frame[:, 0:(width//2)]
+      right = frame[:, width//2:]
       #cv2.imshow("pub show", frame)
       #cv2.waitKey(1)
       if ret == True:
@@ -59,11 +59,12 @@ def publish_message():
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(bridge.cv2_to_imgmsg(frame, encoding="rgb8"))
-        #pub_left.publish(bridge.cv2_to_imgmsg(left))
-        #pub_right.publish(bridge.cv2_to_imgmsg(right))
+        pub_left.publish(bridge.cv2_to_imgmsg(left))
+        right = cv2.cvtColor(right, cv2.COLOR_BGR2RGB)
+        #cv2.imshow("pubtest", right)
+        pub_right.publish(bridge.cv2_to_imgmsg(right, encoding = "rgb8"))
 
       # Sleep just enough to maintain the desired rate
-
       rate.sleep()
          
 if __name__ == '__main__':
