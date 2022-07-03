@@ -1,10 +1,11 @@
 <launch>
+  <arg name="camera_yolo_slice" default="right" />
   <node
     pkg="camera"
     type="camera_pub.py"
     name="camera_pub"
     output="screen"
-  />
+    args="$(arg camera_yolo_slice)"/>
 <!--  <node
     pkg="camera"
     type="camera_sub.py"

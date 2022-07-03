@@ -8,13 +8,12 @@ from cv_bridge import \
 from sensor_msgs.msg import Image  # Image is the message type
 
 
-def publish_message():
+def publish_message(frame_slice='right'):
  
   # Node is publishing to the video_frames topic using 
   # the message type Image
-  pub = rospy.Publisher('video_frames', Image, queue_size=10)
-  pub_left = rospy.Publisher('video_left', Image, queue_size=10)
-  pub_right = rospy.Publisher('video_right', Image, queue_size=10)  
+  pub = rospy.Publisher('video_frames', Image, queue_size=3)
+  pub_slice = rospy.Publisher('camera/rgb/image_raw', Image, queue_size=2)
 
   # Tells rospy the name of the node.
   # Anonymous = True makes sure the node has a unique name. Random
@@ -27,8 +26,6 @@ def publish_message():
   # Create a VideoCapture object
   # The argument '0' gets the default webcam.
   cap = cv2.VideoCapture(cv2.CAP_ANY)
- 
-  #cap = cv2.VideoCapture(2)
 
   # Used to convert between ROS and OpenCV images
   bridge = CvBridge()
@@ -36,40 +33,34 @@ def publish_message():
   # While ROS is still running.
   while not rospy.is_shutdown():
      
-      # Capture frame-by-frame
-      # This method returns True/False as well
-      # as the video frame.
       #print("contrast", cap.get(cv2.CAP_PROP_CONTRAST))
       #print("saturation", cap.get(cv2.CAP_PROP_SATURATION))
       #print("brightness", cap.get(cv2.CAP_PROP_BRIGHTNESS))
+
+      # Capture frame-by-frame
       ret, frame = cap.read()
-      width = frame.shape[1]
-      left = frame[:, 0:(width//2)]
-      right = frame[:, width//2:]
-      #cv2.imshow("pub show", frame)
-      #cv2.waitKey(1)
-      if ret == True:
-        # Print debugging information to the terminal
+      if ret:
+        width = frame.shape[1]
+        center = width//2
+        fslice = frame[:, center:] if frame_slice == 'right' else frame[:, :center]
+        fslice = cv2.cvtColor(fslice, cv2.COLOR_BGR2RGB)
+
         rospy.loginfo('publishing video frame')
 
-        cv2.imshow("raw", frame)
-        cv2.waitKey(50)
-             
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(bridge.cv2_to_imgmsg(frame, encoding="rgb8"))
-        pub_left.publish(bridge.cv2_to_imgmsg(left))
-        right = cv2.cvtColor(right, cv2.COLOR_BGR2RGB)
-        #cv2.imshow("pubtest", right)
-        pub_right.publish(bridge.cv2_to_imgmsg(right, encoding = "rgb8"))
+        pub_slice.publish(bridge.cv2_to_imgmsg(fslice, encoding = "rgb8"))
 
       # Sleep just enough to maintain the desired rate
       rate.sleep()
          
 if __name__ == '__main__':
-  cv2.namedWindow('raw',cv2.WINDOW_NORMAL)
+  #cv2.namedWindow('raw',cv2.WINDOW_NORMAL)
+  import sys
+  frame_slice = sys.argv[1] if len(sys.argv) > 1 else 'right'
   try:
-    publish_message()
+    publish_message(frame_slice)
   except rospy.ROSInterruptException:
     pass
