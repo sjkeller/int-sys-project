@@ -9,23 +9,7 @@ from sensor_msgs.msg import Image # Image is the message type
 import cv2, os # OpenCV library
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import numpy as np
-"""
-# get calibration data from xml file
-calib_file = cv2.FileStorage()
-os.chdir("/home/parallels/isp-2022/jetson_nano/catkin_ws/src/camera/scripts")
-calib_file.open("stereoMap.xml", cv2.FileStorage_READ)
 
-
-stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
-stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
-stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
-stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
-
-print(stereoMapL_x)
-print(stereoMapL_y)
-print(stereoMapL_x)
-print(stereoMapR_x)
-"""
 def nothing(x):
   pass
 
@@ -45,11 +29,7 @@ def callback(data):
   width = current_frame.shape[1]
   left = current_frame[:, 0:(width//2)]
   right = current_frame[:, width//2:]
-  """
-  # apply calibration to both video parts
-  right = cv2.remap(right, stereoMapR_x, stereoMapR_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
-  left = cv2.remap(left, stereoMapL_x, stereoMapL_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
-  """
+
   # convert video streams to grayscale
   left_gs = cv2.cvtColor(left, cv2.COLOR_BGR2GRAY)
   right_gs = cv2.cvtColor(right, cv2.COLOR_BGR2GRAY)
@@ -82,7 +62,6 @@ def callback(data):
   
   #ret, sol = cv2.(coeff, z, flags = cv2.DECOMP_QR)
   
-  
   cv2.waitKey(50)
   
 def receive_message():
@@ -90,10 +69,10 @@ def receive_message():
   # Tells rospy the name of the node.
   # Anonymous = True makes sure the node has a unique name. Random
   # numbers are added to the end of the name. 
-  rospy.init_node('video_sub_py', anonymous=True)
+  rospy.init_node('camera_depth', anonymous=True)
    
   # Node is subscribing to the video_frames topic
-  rospy.Subscriber('video_frames', Image, callback)
+  rospy.Subscriber('camera/frame_corr_both', Image, callback)
  
   # spin() simply keeps python from exiting until this node is stopped
   rospy.spin()
@@ -111,6 +90,7 @@ if __name__ == '__main__':
   
   # init stereo class
   stereo : StereoBM = cv2.StereoBM_create()
-  
-  receive_message()
-  
+  try:
+    receive_message()
+  except rospy.ROSInterruptException:
+    pass  

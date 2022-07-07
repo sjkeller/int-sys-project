@@ -1,0 +1,15 @@
+<launch>
+  <node
+    pkg="camera"
+    type="camera_pub.py"
+    name="camera_pub"
+    output="screen"
+    />
+  <node
+    pkg="camera"
+    type="camera_depth.py"
+    name="camera_depth"
+    output="screen"
+  />
+  <include file="/home/parallels/isp-2022/jetson_nano/catkin_ws/src/darknet_ros/darknet_ros/launch/darknet_ros.launch" />
+</launch>

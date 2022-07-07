@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
  
 # Import the necessary libraries
-from inspect import currentframe
-
-from cv2 import StereoBM
+from pathlib import Path
 import rospy # Python library for ROS
 from sensor_msgs.msg import Image # Image is the message type
 import cv2, os # OpenCV library
@@ -12,15 +10,14 @@ import numpy as np
 
 # get calibration data from xml file
 calib_file = cv2.FileStorage()
-os.chdir("/home/parallels/isp-2022/jetson_nano/catkin_ws/src/camera/scripts")
-calib_file.open("stereoMap.xml", cv2.FileStorage_READ)
-
+home = Path.home()
+calib_file.open(str(home) + "/isp-2022/jetson_nano/catkin_ws/src/camera/scripts/stereoMap.xml", cv2.FileStorage_READ)
 
 stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
 stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
 stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
 stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
-
+    
 print(stereoMapL_x)
 print(stereoMapL_y)
 print(stereoMapL_x)
@@ -86,4 +83,5 @@ if __name__ == '__main__':
 	
   
   receive_message()
+
   

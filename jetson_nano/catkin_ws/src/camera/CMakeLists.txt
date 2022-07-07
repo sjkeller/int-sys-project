@@ -170,7 +170,8 @@ target_link_libraries(camera_sub_cpp ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
   scripts/camera_pub.py
-  scripts/camera_sub.py
+  scripts/camera_corr.py
+  scripts/camera_depth.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

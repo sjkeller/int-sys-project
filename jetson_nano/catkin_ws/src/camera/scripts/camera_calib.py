@@ -3,25 +3,42 @@
 import cv2 as cv # OpenCV library
 import numpy as np
 import glob, os
-# checkerboard contants
+from datetime import datetime as dt
+from pathlib import Path
 
-def make_shots():
-    cap = cv.VideoCapture(0)
+home = Path.home()
+now = dt.now()
+folder_id = now.strftime("%d-%m-%Y_%H-%M-%S")
+work_path = str(home) + "/isp-2022/jetson_nano/catkin_ws/src/camera/scripts/calib_samples/" + folder_id
+os.mkdir(work_path)
+os.mkdir(work_path + "/left")
+os.mkdir(work_path + "/right")
+
+print(work_path)
+def make_shots(cam: int = cv.CAP_ANY):
+    cap = cv.VideoCapture(cam)
     counter = 0
+
     while(True):
-        ret, frame = cap.read()
+        _, frame = cap.read()
         cv.imshow("video feed", frame)
-        if cv.waitKey(1) & 0xFF == ord('y'):
+        if cv.waitKey(1) & 0xFF == ord('s'):
             counter += 1
-            cv.imwrite("video_shot_" + str(counter) + ".png", frame)
+            width_cutoff = frame.shape[1] // 2
+            frame_left = frame[:, width_cutoff:] # left
+            frame_right = frame[:, :width_cutoff] # right
+            cv.imshow("right shot", frame_right)
+            cv.imshow("left shot", frame_left)
+            cv.imwrite(work_path + "/left/video_shot_" + str(counter) + ".png", frame_left)
+            cv.imwrite(work_path + "/right/video_shot_" + str(counter) + ".png", frame_right)
+            cv.waitKey(1000)
+        if cv.waitKey(1) & 0xFF == ord('x'):
             cv.destroyAllWindows()
             break
 
-def cam_calib():
-    ################ FIND CHESSBOARD CORNERS - OBJECT POINTS AND IMAGE POINTS #############################
 
-    chessboardSize = (8,6)
-    frameSize = (1280,720)
+def cam_calib(chessboardSize: tuple = (8, 6), frameSize: tuple = (1280, 720), chess_size: int = 25):
+    ################ FIND CHESSBOARD CORNERS - OBJECT POINTS AND IMAGE POINTS #############################
 
     # termination criteria
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -30,20 +47,18 @@ def cam_calib():
     objp = np.zeros((chessboardSize[0] * chessboardSize[1], 3), np.float32)
     objp[:,:2] = np.mgrid[0:chessboardSize[0],0:chessboardSize[1]].T.reshape(-1,2)
 
-    size_of_chessboard_squares_mm = 25
+    size_of_chessboard_squares_mm = chess_size
     objp = objp * size_of_chessboard_squares_mm
 
     # Arrays to store object points and image points from all the images.
     objpoints = [] # 3d point in real world space
     imgpointsL = [] # 2d points in image plane.
     imgpointsR = [] # 2d points in image plane.
-    print(os.getcwd())
-    imagesLeft = sorted(glob.glob('calib_samples/left_cut/*.png'))
-    imagesRight = sorted(glob.glob('calib_samples/right_cut/*.png'))
+    imagesLeft = sorted(glob.glob(work_path + "/left/*.png"))
+    imagesRight = sorted(glob.glob(work_path + "/right/*.png"))
 
     print(imagesLeft)
     print(imagesRight)
-    print(os.getcwd())
 
     for imgLeft, imgRight in zip(imagesLeft, imagesRight):
 
@@ -77,9 +92,6 @@ def cam_calib():
 
     cv.destroyAllWindows()
 
-
-
-
     ############## CALIBRATION #######################################################
 
     retL, cameraMatrixL, distL, rvecsL, tvecsL = cv.calibrateCamera(objpoints, imgpointsL, frameSize, None, None, flags=cv.CALIB_FIX_K3)
@@ -107,9 +119,7 @@ def cam_calib():
 
     ########## Stereo Rectification #################################################
 
-    rectifyScale= 1
-     # change alpha maybe??
-
+    rectifyScale = 1
     rectL, rectR, projMatrixL, projMatrixR, Q, roi_L, roi_R= cv.stereoRectify(newCameraMatrixL, distL, newCameraMatrixR, distR, grayL.shape[::-1], rot, trans, rectifyScale,(0,0), alpha=0.0)
 
     stereoMapL = cv.initUndistortRectifyMap(newCameraMatrixL, distL, rectL, projMatrixL, grayL.shape[::-1], cv.CV_16SC2)
@@ -125,5 +135,10 @@ def cam_calib():
 
     cv_file.release()
 
-if __name__ == '__main__':
+def main():
+    make_shots()
     cam_calib()
+
+
+if __name__ == '__main__':
+    main()
