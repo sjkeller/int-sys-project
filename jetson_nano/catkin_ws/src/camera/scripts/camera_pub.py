@@ -9,17 +9,17 @@ from cv_bridge import \
     CvBridge  # Package to convert between ROS and OpenCV Images
 from sensor_msgs.msg import Image  # Image is the message type
 
-# get calibration data from xml file
-calib_file = cv2.FileStorage()
-home = Path.home()
-calib_file.open(str(home) + "/isp-2022/jetson_nano/catkin_ws/src/camera/scripts/stereoMap.xml", cv2.FileStorage_READ)
-
-stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
-stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
-stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
-stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
 
 def publish_message():
+  # get calibration data from xml file
+  calib_file = cv2.FileStorage()
+
+  calib_file.open( str(Path(__file__).parent / 'stereoMap.xml'), cv2.FileStorage_READ)
+
+  stereoMapL_x = calib_file.getNode('stereoMapL_x').mat()
+  stereoMapL_y = calib_file.getNode('stereoMapL_y').mat()
+  stereoMapR_x = calib_file.getNode('stereoMapR_x').mat()
+  stereoMapR_y = calib_file.getNode('stereoMapR_y').mat()
  
   # Node is publishing to the video_frames topic using 
   # the message type Image
@@ -60,7 +60,7 @@ def publish_message():
 
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
-        # image to a ROS image message    hzzjoi
+        # image to a ROS image message
 
         frame_corr = np.hstack((left, right))
 
