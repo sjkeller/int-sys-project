@@ -172,6 +172,7 @@ catkin_install_python(PROGRAMS
   scripts/camera_pub.py
   scripts/camera_corr.py
   scripts/camera_depth.py
+  scripts/yolo_mediator.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

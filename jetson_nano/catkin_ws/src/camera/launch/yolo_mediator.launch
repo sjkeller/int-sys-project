@@ -1,0 +1,15 @@
+<launch>
+  <arg name="frame_slice" default="right" doc="[left, right] camera for object detection" />
+  <arg name="scale_factor" default="1.0" doc="Factor to scale frame by" />
+  <arg name="calib" default="true" doc="Use calibrated camera frame" />
+  <param name="frame_slice" value="$(arg frame_slice)" type="str" />
+  <param name="scale_factor" value="$(arg scale_factor)" type="double" />
+  <param name="calib" value="$(arg calib)" type="bool" />
+
+  <node
+    pkg="camera"
+    type="yolo_mediator.py"
+    name="yolo_mediator"
+    output="screen"
+    />
+</launch>
