@@ -29,11 +29,17 @@ def get_rc_channels() -> List[int] :
     rc_in_msg = rospy.wait_for_message(RC_IN_TOPIC, RCIn, ROS_TIMEOUT_SEC)
     return list(rc_in_msg.channels)
 
+def get_rc_channel(channel : int) -> int: 
+    channel_index = channel - 1
+    return get_rc_channels()[channel_index]
+    
+
 def set_rc_channel(channel : int, value : int):
+    channel_index = channel - 1
     # Read current rc channel values
     channels = get_rc_channels()
     # Override given rc channel
-    channels[channel] = value
+    channels[channel_index] = value
     while rc_publisher.get_num_connections() < 1:
         # Wait for publisher to be ready
         pass
