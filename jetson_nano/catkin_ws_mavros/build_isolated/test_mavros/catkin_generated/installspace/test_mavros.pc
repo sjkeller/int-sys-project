@@ -1,8 +1,0 @@
-prefix=/home/nano/gitlab_repo/jetson_nano/catkin_ws_mavros/install_isolated
-
-Name: test_mavros
-Description: Description of test_mavros
-Version: 0.32.0
-Cflags: -I/usr/include
-Libs: -L${prefix}/lib /usr/lib/aarch64-linux-gnu/libboost_system.so.1.71.0
-Requires: control_toolbox eigen_conversions geometry_msgs mavros mavros_extras roscpp std_msgs tf2_ros
