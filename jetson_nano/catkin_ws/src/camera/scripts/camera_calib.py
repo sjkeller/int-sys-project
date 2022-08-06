@@ -6,6 +6,9 @@ import glob, os
 from datetime import datetime as dt
 from pathlib import Path
 
+
+camport = cv.CAP_ANY
+
 home = Path.home()
 now = dt.now()
 folder_id = now.strftime("%d-%m-%Y_%H-%M-%S")
@@ -15,7 +18,7 @@ os.mkdir(work_path + "/left")
 os.mkdir(work_path + "/right")
 
 print(work_path)
-def make_shots(cam: int = cv.CAP_ANY):
+def make_shots(cam: int = camport):
     cap = cv.VideoCapture(cam)
     counter = 0
 
