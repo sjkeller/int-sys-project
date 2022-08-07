@@ -1,4 +1,7 @@
 # YOEO — You Only Encode Once
+
+*IMPORTANT!!!: If CMake is older than 3.22 a newer version must be installed. More details in folder /dep.*
+
 A CNN for Embedded Object Detection and Semantic Segmentation
 
 This project is based upon [PyTorch-YOLOv3](https://github.com/eriklindernoren/PyTorch-YOLOv3) and will continuously be modified to our needs.

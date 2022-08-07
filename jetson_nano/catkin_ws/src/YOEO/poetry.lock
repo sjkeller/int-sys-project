@@ -324,7 +324,7 @@ protobuf = ">=3.7.0"
 
 [[package]]
 name = "onnxoptimizer"
-version = "0.2.6"
+version = "0.3.0"
 description = "Open Neural Network Exchange"
 category = "main"
 optional = false
@@ -351,7 +351,7 @@ protobuf = "*"
 
 [[package]]
 name = "onnxruntime-gpu"
-version = "1.10.0"
+version = "1.12.1"
 description = "ONNX Runtime is a runtime accelerator for Machine Learning models"
 category = "main"
 optional = false
@@ -988,6 +988,7 @@ onnxoptimizer = [
     {file = "onnxoptimizer-0.2.6-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:0c05bbf023af64394394e3c98597b45785634cbd4ea5d80b2f15134889d6239c"},
     {file = "onnxoptimizer-0.2.6-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:9a9bbbaf58c739d68ec88f50d6f667cb131ccbafa6b0f91d0aee5886b1ce8a03"},
     {file = "onnxoptimizer-0.2.6-cp39-cp39-win_amd64.whl", hash = "sha256:7557b4a22b656c46956a21ac806ac18b5889a2b0447fbaf65e37881dac1ff97c"},
+    {file = "onnxoptimizer-0.3.0.tar.gz", hash = "sha256:efc47a90e848d30677a40da7728d2433b3c7336cc2a91ba99c790ee89f180e3c"},
 ]
 onnxruntime = [
     {file = "onnxruntime-1.10.0-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:aa5dec9c7c4fd5b8b9b77768c0f493fe730c7c277fd919c00578afa073d3f1b2"},
@@ -1019,6 +1020,7 @@ onnxruntime-gpu = [
     {file = "onnxruntime_gpu-1.10.0-cp38-cp38-win_amd64.whl", hash = "sha256:f6e056cd38265e1a158b72da234546291bb3cad663d81dcd66cbcbbce028e3a8"},
     {file = "onnxruntime_gpu-1.10.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2ffe8009eef07307a836e654a8449c177c0ef84ef29c4619d464d5ad8ab2d01b"},
     {file = "onnxruntime_gpu-1.10.0-cp39-cp39-win_amd64.whl", hash = "sha256:8e4c52e6af7e2a10ed41e51986a247b91ef0e568f51c9d88e0eae181cfd04f62"},
+    {file = "onnxruntime_gpu-1.12.1-cp39-cp39-win_amd64.whl", hash = "sha256:fd919373be35b9ba54210688265df38ad5e19a530449385c40dab51da407345d"},
 ]
 opencv-python = [
     {file = "opencv_python-4.5.2.54-cp36-cp36m-macosx_10_15_x86_64.whl", hash = "sha256:4e6c2d8320168a4f76822fbb76df3b18688ac5e068d49ac38a4ce39af0f8e1a6"},
