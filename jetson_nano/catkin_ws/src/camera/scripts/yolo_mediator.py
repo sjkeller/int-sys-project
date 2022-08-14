@@ -8,7 +8,7 @@ from sensor_msgs.msg import Image
 class Mediator:
     def __init__(self, cfg):
         self.yolo_pub = rospy.Publisher(
-            '/camera/rgb/image_raw', Image, queue_size=2
+            '/camera/rgb/image_raw', Image, queue_size=1
         )
         self.cfg = cfg
         self.br = CvBridge()

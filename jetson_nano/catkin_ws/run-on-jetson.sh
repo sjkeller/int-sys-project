@@ -5,6 +5,10 @@ SYNC_DIR="~/.catkin_ws_rsync/"
 rsync -a --delete \
 	--exclude="build" \
 	--exclude="devel" \
+	--exclude="**/*.weights" \
+	--exclude="**/*.so" \
+	--exclude="**/*.cfg" \
+	--exclude="**/*.onnx" \
 	--exclude=".catkin_workspace" \
 	"$DIR"/ $JETSON_SSH:$SYNC_DIR
 
