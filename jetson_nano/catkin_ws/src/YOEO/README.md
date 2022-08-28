@@ -1,6 +1,13 @@
-# YOEO — You Only Encode Once
+# IMPORTANT: Dependecies on ARCH64
 
-*IMPORTANT!!!: If CMake is older than 3.22 a newer version must be installed. More details in folder /dep.*
+* CMake needs to be 3.22 or newer. More infromation inside /dep/*
+* onxoptimizer 0.2.6 which is required in the default poetry.lock file is not available on ARCH64. Thus, version 0.3.0 was set in the changed .lock file.
+* the same applies to onnxruntime-gpu (1.12.1 instead of 1.10.0). Of course newer version can be tried out.
+* If the user want to select specific version himself, he also needs to add the sha265 hash of the setup archive.
+* The old .lock file indicated by "_old" can be used to compare version differences.
+
+original readme:
+# YOEO — You Only Encode Once
 
 A CNN for Embedded Object Detection and Semantic Segmentation
 

@@ -1,2 +1,0 @@
-/home/parallels/Downloads/cmake-3.24.0/Tests/CMakeFiles/CheckFortran/CMakeFiles/edit_cache.dir
-/home/parallels/Downloads/cmake-3.24.0/Tests/CMakeFiles/CheckFortran/CMakeFiles/rebuild_cache.dir

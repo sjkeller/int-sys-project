@@ -1,7 +1,0 @@
-Source/CMakeFiles/CMakeLib.dir/cmConsoleBuf.cxx.o: \
- /home/parallels/Downloads/cmake-3.24.0/Source/cmConsoleBuf.cxx \
- /usr/include/stdc-predef.h \
- /home/parallels/Downloads/cmake-3.24.0/Source/cmConsoleBuf.h \
- /home/parallels/Downloads/cmake-3.24.0/Source/cmConfigure.h \
- /home/parallels/Downloads/cmake-3.24.0/Source/cmsys/Configure.hxx \
- /home/parallels/Downloads/cmake-3.24.0/Source/cmsys/Configure.h
