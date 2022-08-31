@@ -3,7 +3,7 @@ import cv2
 import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
-
+from darknet_ros_msgs.msg import BoundingBoxes, BoundingBox
 
 class Mediator:
     def __init__(self, cfg):
@@ -12,15 +12,16 @@ class Mediator:
         )
         self.cfg = cfg
         self.br = CvBridge()
-        for n in ['frame_slice', 'scale_factor', 'calib']:
+        for n in ['frame_slice', 'scale_factor', 'calib', 'log_detection', 'thresh', 'verbose']:
             rospy.loginfo(f'{n}: {self.cfg[n]}')
 
     def mediate(self, data):
         frame = self.br.imgmsg_to_cv2(data)
         img, encoding = self.transform_frame(frame)
-        rospy.loginfo(
-            f'Mediating video frame {frame.shape} to yolo: {img.shape}'
-        )
+        if self.cfg['verbose']:
+            rospy.loginfo(
+                f'Mediating video frame {frame.shape} to yolo: {img.shape}'
+            )
         self.yolo_pub.publish(self.br.cv2_to_imgmsg(img, encoding=encoding))
 
     def transform_frame(self, frame):
@@ -37,18 +38,26 @@ class Mediator:
             )
         return fslice, "rgb8"
 
+    def log_detection(self, msg):
+        for box in msg.bounding_boxes:
+            if box.probability > self.cfg['thresh']:
+                rospy.loginfo(f'{box.Class:7s}: {box.probability:2.0%} bbox[x:{box.xmin:4d}, y:{box.ymin:4d}, w:{box.xmax-box.xmin:4d}, h:{box.ymax-box.ymin:4d}]')
 
 def run():
     rospy.init_node('yolo_mediator_py', log_level=rospy.INFO)
 
     mediator = Mediator({
         k: rospy.get_param(k)
-        for k in ['frame_slice', 'scale_factor', 'calib']
+        for k in ['frame_slice', 'scale_factor', 'calib', 'log_detection', 'thresh', 'verbose']
     })
 
     frame_both_topic = '/camera/frame_corr_both' if rospy.get_param(
         'calib') else '/camera/frame_both'
     rospy.Subscriber(frame_both_topic, Image, mediator.mediate)
+
+    if mediator.cfg['log_detection']:
+        rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, mediator.log_detection)
+
     rospy.spin()
 
 

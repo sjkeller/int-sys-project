@@ -23,8 +23,8 @@ def publish_message():
  
   # Node is publishing to the video_frames topic using 
   # the message type Image
-  pub_corr_both = rospy.Publisher('/camera/frame_corr_both', Image, queue_size=3)
-  pub_both = rospy.Publisher('/camera/frame_both', Image, queue_size=3)
+  pub_corr_both = rospy.Publisher('/camera/frame_corr_both', Image, queue_size=1)
+  pub_both = rospy.Publisher('/camera/frame_both', Image, queue_size=1)
 
   # Tells rospy the name of the node.
   # Anonymous = True makes sure the node has a unique name. Random
