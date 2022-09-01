@@ -56,18 +56,18 @@ def calibrate():
     apm.set_parameter("WIND_MAX", 1500)
 
     calibration_data = {}
-    calibration_data["rudder_left"] = _calibrate_servo(1300, ServoType.RUDDER, "left")
-    calibration_data["rudder_right"] = _calibrate_servo(1300, ServoType.RUDDER, "right")
-    calibration_data["rudder_mid"] = _calibrate_servo(1300, ServoType.RUDDER, "midship")
+    calibration_data["RUDDER_MIN"] = _calibrate_servo(1300, ServoType.RUDDER, "left")
+    calibration_data["RUDDER_MID"] = _calibrate_servo(1300, ServoType.RUDDER, "midship")
+    calibration_data["RUDDER_MAX"] = _calibrate_servo(1300, ServoType.RUDDER, "right")
 
-    calibration_data["sail_left"] = _calibrate_servo(1300, ServoType.SAIL, "left")
-    calibration_data["sail_right"] = _calibrate_servo(1300, ServoType.SAIL, "right")
-    calibration_data["sail_mid"] = _calibrate_servo(1300, ServoType.SAIL, "midship")
+    calibration_data["SAIL_MIN"] = _calibrate_servo(1300, ServoType.SAIL, "left")
+    calibration_data["SAIL_MID"] = _calibrate_servo(1300, ServoType.SAIL, "midship")
+    calibration_data["SAIL_MAX"] = _calibrate_servo(1300, ServoType.SAIL, "right")
 
     wind_mid, wind_min, wind_max = _calibrate_wind_sensor()
-    calibration_data["wind_mid"] = wind_mid
-    calibration_data["wind_min"] = wind_min
-    calibration_data["wind_max"] = wind_max
+    calibration_data["WIND_MIN"] = wind_min
+    calibration_data["WIND_MID"] = wind_mid
+    calibration_data["WIND_MAX"] = wind_max
 
     _save_calibration_data(calibration_data)
 
