@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-if [ ! -f /usr/local/cuda-10.2/include/curand.h ]
+if [ ! -f /usr/local/cuda-10.0/include/curand.h ]
 then
 	sudo apt install -y \
-		cuda-command-line-tools-10-2 \
-		cuda-compiler-10-2 \
-		cuda-toolkit-10-2 \
-		libcurand-dev-10-2 \
-		libcublas-dev \
-		libcudnn8-dev \
+		cuda-command-line-tools-10-0 \
+		cuda-compiler-10-0 \
+		cuda-curand-dev-10-0 \
+		cuda-cublas-dev-10-0 \
+		libcudnn7-dev \
 		gcc-7 \
 		g++-7
 fi

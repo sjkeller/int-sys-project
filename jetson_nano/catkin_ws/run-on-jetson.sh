@@ -1,6 +1,6 @@
 #!/bin/bash
 DIR=`dirname "${BASH_SOURCE[0]}"`
-JETSON_SSH="jetson"
+JETSON_SSH="jetson-nano"
 SYNC_DIR="~/.catkin_ws_rsync/"
 rsync -a --delete \
 	--exclude="build" \
