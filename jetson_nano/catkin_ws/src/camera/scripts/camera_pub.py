@@ -31,15 +31,18 @@ def publish_message():
   # numbers are added to the end of the name.
   rospy.init_node('video_pub_py', anonymous=True)
      
-  # Go through the loop 10 times per second
-  rate = rospy.Rate(10) # 10hz
-     
+  # Go through the loop n times per second
+  rate = rospy.Rate(rospy.get_param('sample_rate'))
+
   # Create a VideoCapture object
   # The argument '0' gets the default webcam.
   cap = cv2.VideoCapture(cv2.CAP_ANY)
 
   # Used to convert between ROS and OpenCV images
   bridge = CvBridge()
+
+  verbose = rospy.get_param('verbose')
+
   # While ROS is still running.
   while not rospy.is_shutdown():
 
@@ -55,18 +58,16 @@ def publish_message():
         # apply calibration to both video parts
         right = cv2.remap(raw_right, stereoMapR_x, stereoMapR_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT, 0)
         left = cv2.remap(raw_left, stereoMapL_x, stereoMapL_y, cv2.INTER_LANCZOS4, cv2.BORDER_CONSTANT,0)
-
-        rospy.loginfo('publishing video frames')
+        frame_corr = np.hstack((left, right))
 
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
-
-        frame_corr = np.hstack((left, right))
-
-
         pub_both.publish(bridge.cv2_to_imgmsg(frame, encoding = "rgb8"))
         pub_corr_both.publish(bridge.cv2_to_imgmsg(frame_corr, encoding = "rgb8"))
+
+        if verbose:
+            rospy.loginfo('Publishing camera frames')
 
       # Sleep just enough to maintain the desired rate
       rate.sleep()
