@@ -6,6 +6,8 @@ then
 		cuda-compiler-10-0 \
 		cuda-curand-dev-10-0 \
 		cuda-cublas-dev-10-0 \
+		cuda-cufft-dev-10-0 \
+		cuda-npp-dev-10-0 \
 		libcudnn7-dev \
 		gcc-7 \
 		g++-7
