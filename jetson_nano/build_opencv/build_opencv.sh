@@ -5,7 +5,7 @@ set -e
 
 # change default constants here:
 readonly PREFIX=/usr/local  # install prefix, (can be ~/.local for a user install)
-readonly DEFAULT_VERSION=4.4.0  # controls the default version (gets reset by the first argument)
+readonly DEFAULT_VERSION=4.2.0  # controls the default version (gets reset by the first argument)
 readonly CPUS=$(nproc)  # controls the number of jobs
 
 # better board detection. if it has 6 or more cpus, it probably has a ton of ram too
@@ -54,7 +54,6 @@ install_dependencies () {
     # package repository or should already be installed (eg. CUDA).
     echo "Installing build dependencies."
     sudo apt-get update
-    sudo apt-get dist-upgrade -y --autoremove
     sudo apt-get install -y \
         build-essential \
         cmake \
@@ -90,34 +89,39 @@ install_dependencies () {
         libxvidcore-dev \
         libx264-dev \
         pkg-config \
-        python-dev \
-        python-numpy \
         python3-dev \
         python3-numpy \
         python3-matplotlib \
         qv4l2 \
         v4l-utils \
-        v4l2ucp \
         zlib1g-dev
+        # python-dev \
+        # python-numpy \
+        # v4l2ucp \
 }
 
 configure () {
     local CMAKEFLAGS="
         -D BUILD_EXAMPLES=OFF
-        -D BUILD_opencv_python2=ON
+        -D BUILD_PERF_TESTS=OFF
+        -D BUILD_TESTS=OFF
+        -D BUILD_opencv_python2=OFF
         -D BUILD_opencv_python3=ON
+	-D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.0
         -D CMAKE_BUILD_TYPE=RELEASE
+        -D CMAKE_C_COMPILER=/usr/bin/gcc-7
+        -D CMAKE_CXX_COMPILER=/usr/bin/g++-7
         -D CMAKE_INSTALL_PREFIX=${PREFIX}
-        -D CUDA_ARCH_BIN=5.3,6.2,7.2
+        -D CUDA_ARCH_BIN=5.3
         -D CUDA_ARCH_PTX=
         -D CUDA_FAST_MATH=ON
-        -D CUDNN_VERSION='8.0'
         -D EIGEN_INCLUDE_PATH=/usr/include/eigen3 
         -D ENABLE_NEON=ON
         -D OPENCV_DNN_CUDA=ON
         -D OPENCV_ENABLE_NONFREE=ON
         -D OPENCV_EXTRA_MODULES_PATH=/tmp/build_opencv/opencv_contrib/modules
         -D OPENCV_GENERATE_PKGCONFIG=ON
+        -D OPENCV_PYTHON3_INSTALL_PATH=/usr/local/lib/python3.8/dist-packages
         -D WITH_CUBLAS=ON
         -D WITH_CUDA=ON
         -D WITH_CUDNN=ON
