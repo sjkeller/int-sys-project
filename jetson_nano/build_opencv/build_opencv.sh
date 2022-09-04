@@ -184,6 +184,8 @@ main () {
 
     cleanup --test-warning
 
+    sudo ln -s /usr/local/lib /usr/local/lib/aarch64-linux-gnu
+
 }
 
 main "$@"
