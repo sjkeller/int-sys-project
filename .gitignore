@@ -1,0 +1,4 @@
+build/
+jetson_nano/catkin_ws/src/darknet_ros/darknet/.nvcc-gcc/
+jetson_nano/catkin_ws/src/darknet_ros/darknet/libdarknet.a
+jetson_nano/catkin_ws/src/darknet_ros/darknet/libdarknet.so

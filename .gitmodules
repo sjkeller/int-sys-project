@@ -1,0 +1,3 @@
+[submodule "jetson_nano/catkin_ws/src/yolov4_trt_ros"]
+	path = jetson_nano/catkin_ws/src/yolov4_trt_ros
+	url = https://collaborating.tuhh.de/cgi0395/yolov4-trt-ros.git

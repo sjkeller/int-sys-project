@@ -1,0 +1,11 @@
+{
+    "rudder_left": 1300,
+    "rudder_right": 1300,
+    "rudder_mid": 1300,
+    "sail_left": 1300,
+    "sail_right": 1300,
+    "sail_mid": 1300,
+    "wind_mid": 940,
+    "wind_min": 940,
+    "wind_max": 940
+}

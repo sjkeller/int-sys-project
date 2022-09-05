@@ -1,0 +1,11 @@
+{
+    "RUDDER_MIN": 0,
+    "RUDDER_MID": 0,
+    "RUDDER_MAX": 0,
+    "SAIL_MIN": 0,
+    "SAIL_MID": 0,
+    "SAIL_MAX": 0,
+    "WIND_MID": 0,
+    "WIND_MIN": 0,
+    "WIND_MAX": 0
+}
