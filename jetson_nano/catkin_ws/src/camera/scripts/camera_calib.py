@@ -12,7 +12,7 @@ camport = cv.CAP_ANY
 home = Path.home()
 now = dt.now()
 folder_id = now.strftime("%d-%m-%Y_%H-%M-%S")
-work_path = str(home) + "/isp-2022/jetson_nano/catkin_ws/src/camera/scripts/calib_samples/" + folder_id
+work_path = str(home) + "/home/nano/gitlab_repo/jetson_nano/catkin_ws/src/camera/scripts/calib_samples/" + folder_id
 os.mkdir(work_path)
 os.mkdir(work_path + "/left")
 os.mkdir(work_path + "/right")
